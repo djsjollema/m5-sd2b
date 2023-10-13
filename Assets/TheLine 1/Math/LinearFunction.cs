@@ -24,4 +24,13 @@ public class LinearFunction
         this.intercept = B.y - this.slope * B.x;
     }
 
+    public Vector3 intersectionPoint(LinearFunction l)
+    {
+        Vector3 iPoint = Vector3.zero;
+        iPoint.x = (l.intercept - this.intercept)/(this.slope - l.slope);
+        iPoint.y = this.slope * iPoint.x + this.intercept;
+        return iPoint;
+
+    }
+
 }

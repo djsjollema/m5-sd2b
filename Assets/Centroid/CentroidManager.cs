@@ -23,12 +23,25 @@ public class CentroidManager : MonoBehaviour
     public GameObject hAB;
     public GameObject hAC;
 
+    private LinearFunction fhABC = new LinearFunction(1,0);
+    private LinearFunction fhACB = new LinearFunction(1,0);
+
+    public GameObject hABC;
+    public GameObject hACB;
+
+    private LineRenderer lhABC;
+    private LineRenderer lhACB;
+
+    public GameObject centroid;
+
+
     void Start()
     {
         lAB = AB.GetComponent<LineRenderer>();
         lAC = AC.GetComponent<LineRenderer>();
         lBC = BC.GetComponent<LineRenderer>();
-
+        lhABC = hABC.GetComponent<LineRenderer>();
+        lhACB = hACB.GetComponent<LineRenderer>();  
     }
 
     void Update()
@@ -48,5 +61,18 @@ public class CentroidManager : MonoBehaviour
         //hAB.transform.position = new Vector3((A.transform.position.x + B.transform.position.x) / 2, (A.transform.position.y + B.transform.position.y) / 2, 0);
         hAB.transform.position = (A.transform.position + B.transform.position)/2;
         hAC.transform.position = new Vector3((A.transform.position.x + C.transform.position.x) / 2, (A.transform.position.y + C.transform.position.y) / 2, 0);
+
+        fhABC.LineTroughTwoPoint(hAB.transform.position, C.transform.position);
+        
+
+        lhABC.SetPosition(0, new Vector3(-10,fhABC.getY(-10), 0));
+        lhABC.SetPosition(1, new Vector3(10, fhABC.getY(10), 0));
+
+        fhACB.LineTroughTwoPoint(hAC.transform.position, B.transform.position);
+        lhACB.SetPosition(0, new Vector3(-10, fhACB.getY(-10), 0));
+        lhACB.SetPosition(1, new Vector3(10, fhACB.getY(10), 0));
+
+        centroid.transform.position = fhABC.intersectionPoint(fhACB);
     }
+
 }
