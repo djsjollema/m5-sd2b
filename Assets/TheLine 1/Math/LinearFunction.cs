@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class LinearFunction 
 {
-    private float slope;
-    private float intercept;
+    public float slope;
+    public float intercept;
 
     public LinearFunction(float slope, float intercept)
     {
